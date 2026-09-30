@@ -52,15 +52,14 @@ async function main(): Promise<void> {
     );
   }
   const fromIndex = process.argv.indexOf("--from-ledger");
-  const fromLedger =
-    fromIndex === -1 ? undefined : Number(process.argv[fromIndex + 1]);
+  const config = loadEnvironment();
+  const fromLedger = fromIndex === -1 ? config.fromLedger : Number(process.argv[fromIndex + 1]);
   if (
     fromLedger !== undefined &&
     (!Number.isSafeInteger(fromLedger) || fromLedger < 1)
   ) {
     throw new Error("--from-ledger must be a positive integer");
   }
-  const config = loadEnvironment();
   const store = new EventStore(config.databasePath);
   const indexer = new SorobanEventIndexer({
     rpcUrl: config.rpcUrl,

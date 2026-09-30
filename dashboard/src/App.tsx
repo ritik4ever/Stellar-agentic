@@ -7,6 +7,7 @@ import { ReportsPage } from './pages/ReportsPage.js';
 import { JobsPage } from './pages/JobsPage.js';
 import { AlertsPage } from './pages/AlertsPage.js';
 import { HealthPage } from './pages/HealthPage.js';
+import { SettingsPage } from './pages/SettingsPage.js';
 import { DashboardAgentBoundary } from './lib/chain/DashboardProvider.js';
 
 function PlaceholderPage({ title }: { title: string }) {
@@ -51,7 +52,7 @@ export function App() {
             <Route path="/limits" element={<PlaceholderPage title="Rate Limits" />} />
             <Route path="/alerts" element={<AlertsPage />} />
             <Route path="/health" element={<HealthPage />} />
-            <Route path="/settings" element={<PlaceholderPage title="Settings" />} />
+            <Route path="/settings" element={<SettingsPage />} />
           </Routes>
         </main>
       </div>

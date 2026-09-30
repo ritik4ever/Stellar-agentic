@@ -106,3 +106,10 @@ Deployments built before this change do not contain those snapshot events.
 Their action audit trail remains fully queryable, but fields that were never in
 the old payloads (channel token/period, job deadline/task/result, rate-limit
 configuration, and agent name) cannot be recovered historically.
+
+## Backfilling from a historical ledger
+
+`stellaragent-indexer catch-up --from-ledger 1200000` pages through history from
+that ledger (resumable via the persisted checkpoint), then `--tail` composes with
+it: catch up first, then follow the head. `INDEXER_FROM_LEDGER` sets the same
+starting point from the environment.

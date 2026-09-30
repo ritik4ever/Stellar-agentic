@@ -11,6 +11,7 @@ import {
 import { getConfigPath, readConfigFile, writeConfigFile } from './config.js';
 import { handlePayCommand } from './pay.js';
 import { handleChannelCommand } from './channel.js';
+import { handleLimitsCommand } from './limits.js';
 
 const HELP = `StellarAgent CLI
 
@@ -24,6 +25,8 @@ Commands:
   config set <k> <v>  Set configuration value
   pay                 Send payment with pre-flight outcome prediction
   channel             Manage payment channels (open, top-up, status, close)
+  limits set          Configure rate limits (per hour / per day)
+  limits show         Show remaining rate-limit headroom and window resets
 
 Options:
   --help, -h          Show this help
@@ -69,8 +72,17 @@ export async function runCli(args: readonly string[], io: CliIO = terminalIO): P
     } catch (error) {
       io.stderr(`Route preview failed: ${errorMessage(error)}`);
       return 1;
-    }
   }
+
+  if (command === 'limits') {
+    const action = args[1];
+    if (action !== 'set' && action !== 'show') {
+      io.stderr('Unknown limits action. Available: set, show');
+      return 2;
+    }
+    return handleLimitsCommand({ action, args }, io);
+  }
+
 
   // Config commands
   if (command === 'config') {

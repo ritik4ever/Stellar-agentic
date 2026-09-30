@@ -39,7 +39,7 @@ stellaragent/
 ├── packages/
 │   ├── core/         # @stellaragent/core — the TypeScript SDK
 │   ├── react/        # @stellaragent/react — hooks
-│   ├── indexer/      # Audit ledger, reports, exports, delivery
+│   ├── indexer/      # Audit ledger, reports, exports, delivery (see packages/indexer/README.md)
 │   └── cli/          # @stellaragent/cli
 ├── python/           # stellaragent — the Python SDK
 ├── services/

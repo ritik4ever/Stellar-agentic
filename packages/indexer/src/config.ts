@@ -31,6 +31,8 @@ export interface EnvironmentConfig {
   reportEmailGatewayToken?: string;
   contracts: ContractAddresses;
   startLedger: number;
+  /** Optional historical starting ledger for backfill; falls back to startLedger. */
+  fromLedger?: number;
   rollbackWindow: number;
   finalityLag: number;
   pollIntervalMs: number;
@@ -84,6 +86,9 @@ export function loadEnvironment(env = process.env): EnvironmentConfig {
       : {}),
     contracts: contracts as ContractAddresses,
     startLedger: positiveInteger(env.INDEXER_START_LEDGER, "INDEXER_START_LEDGER"),
+    ...(env.INDEXER_FROM_LEDGER
+      ? { fromLedger: positiveInteger(env.INDEXER_FROM_LEDGER, "INDEXER_FROM_LEDGER") }
+      : {}),
     rollbackWindow: positiveInteger(env.INDEXER_ROLLBACK_WINDOW, "INDEXER_ROLLBACK_WINDOW", 12),
     finalityLag: positiveInteger(env.INDEXER_FINALITY_LAG, "INDEXER_FINALITY_LAG", 1),
     pollIntervalMs: positiveInteger(env.INDEXER_POLL_INTERVAL_MS, "INDEXER_POLL_INTERVAL_MS", 5_000),
